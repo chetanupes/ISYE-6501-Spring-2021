@@ -1,0 +1,930 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Assignment 8},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Assignment 8}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{question-11.1}{%
+\subsection{Question 11.1}\label{question-11.1}}
+
+Using the crime data set uscrime.txt from Questions 8.2, 9.1, and 10.1,
+build a regression model using: 1. Stepwise regression 2. Lasso 3.
+Elastic net For Parts 2 and 3, remember to scale the data first --
+otherwise, the regression coefficients will be on different scales and
+the constraint won't have the desired effect.
+
+\hypertarget{answer-11.1}{%
+\subsection{Answer 11.1}\label{answer-11.1}}
+
+\hypertarget{stepwise-regression}{%
+\subsection{1. Stepwise Regression}\label{stepwise-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{library}\NormalTok{(caret)}
+\KeywordTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Getting the data}
+\NormalTok{crime_data<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{'uscrime.txt'}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#Set seed }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+
+\CommentTok{#Fitting the full model}
+\NormalTok{lmr<-}\KeywordTok{lm}\NormalTok{(Crime}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data =}\NormalTok{ crime_data)}
+\KeywordTok{summary}\NormalTok{(lmr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ ., data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -395.74  -98.09   -6.69  112.99  512.67 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5.984e+03  1.628e+03  -3.675 0.000893 ***
+## M            8.783e+01  4.171e+01   2.106 0.043443 *  
+## So          -3.803e+00  1.488e+02  -0.026 0.979765    
+## Ed           1.883e+02  6.209e+01   3.033 0.004861 ** 
+## Po1          1.928e+02  1.061e+02   1.817 0.078892 .  
+## Po2         -1.094e+02  1.175e+02  -0.931 0.358830    
+## LF          -6.638e+02  1.470e+03  -0.452 0.654654    
+## M.F          1.741e+01  2.035e+01   0.855 0.398995    
+## Pop         -7.330e-01  1.290e+00  -0.568 0.573845    
+## NW           4.204e+00  6.481e+00   0.649 0.521279    
+## U1          -5.827e+03  4.210e+03  -1.384 0.176238    
+## U2           1.678e+02  8.234e+01   2.038 0.050161 .  
+## Wealth       9.617e-02  1.037e-01   0.928 0.360754    
+## Ineq         7.067e+01  2.272e+01   3.111 0.003983 ** 
+## Prob        -4.855e+03  2.272e+03  -2.137 0.040627 *  
+## Time        -3.479e+00  7.165e+00  -0.486 0.630708    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 209.1 on 31 degrees of freedom
+## Multiple R-squared:  0.8031, Adjusted R-squared:  0.7078 
+## F-statistic: 8.429 on 15 and 31 DF,  p-value: 3.539e-07
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Using Stepwise regression and evaluating the results}
+\NormalTok{step<-}\KeywordTok{stepAIC}\NormalTok{(lmr, }\DataTypeTok{scope =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{lower =}\NormalTok{ Crime}\OperatorTok{~}\DecValTok{1}\NormalTok{, }\DataTypeTok{upper =}\NormalTok{ Crime}\OperatorTok{~}\NormalTok{.),}
+              \DataTypeTok{direction =} \StringTok{'both'}\NormalTok{,}\DataTypeTok{trace =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=514.65
+## Crime ~ M + So + Ed + Po1 + Po2 + LF + M.F + Pop + NW + U1 + 
+##     U2 + Wealth + Ineq + Prob + Time
+## 
+##          Df Sum of Sq     RSS    AIC
+## - So      1        29 1354974 512.65
+## - LF      1      8917 1363862 512.96
+## - Time    1     10304 1365250 513.00
+## - Pop     1     14122 1369068 513.14
+## - NW      1     18395 1373341 513.28
+## - M.F     1     31967 1386913 513.74
+## - Wealth  1     37613 1392558 513.94
+## - Po2     1     37919 1392865 513.95
+## <none>                1354946 514.65
+## - U1      1     83722 1438668 515.47
+## - Po1     1    144306 1499252 517.41
+## - U2      1    181536 1536482 518.56
+## - M       1    193770 1548716 518.93
+## - Prob    1    199538 1554484 519.11
+## - Ed      1    402117 1757063 524.86
+## - Ineq    1    423031 1777977 525.42
+## 
+## Step:  AIC=512.65
+## Crime ~ M + Ed + Po1 + Po2 + LF + M.F + Pop + NW + U1 + U2 + 
+##     Wealth + Ineq + Prob + Time
+## 
+##          Df Sum of Sq     RSS    AIC
+## - Time    1     10341 1365315 511.01
+## - LF      1     10878 1365852 511.03
+## - Pop     1     14127 1369101 511.14
+## - NW      1     21626 1376600 511.39
+## - M.F     1     32449 1387423 511.76
+## - Po2     1     37954 1392929 511.95
+## - Wealth  1     39223 1394197 511.99
+## <none>                1354974 512.65
+## - U1      1     96420 1451395 513.88
+## + So      1        29 1354946 514.65
+## - Po1     1    144302 1499277 515.41
+## - U2      1    189859 1544834 516.81
+## - M       1    195084 1550059 516.97
+## - Prob    1    204463 1559437 517.26
+## - Ed      1    403140 1758114 522.89
+## - Ineq    1    488834 1843808 525.13
+## 
+## Step:  AIC=511.01
+## Crime ~ M + Ed + Po1 + Po2 + LF + M.F + Pop + NW + U1 + U2 + 
+##     Wealth + Ineq + Prob
+## 
+##          Df Sum of Sq     RSS    AIC
+## - LF      1     10533 1375848 509.37
+## - NW      1     15482 1380797 509.54
+## - Pop     1     21846 1387161 509.75
+## - Po2     1     28932 1394247 509.99
+## - Wealth  1     36070 1401385 510.23
+## - M.F     1     41784 1407099 510.42
+## <none>                1365315 511.01
+## - U1      1     91420 1456735 512.05
+## + Time    1     10341 1354974 512.65
+## + So      1        65 1365250 513.00
+## - Po1     1    134137 1499452 513.41
+## - U2      1    184143 1549458 514.95
+## - M       1    186110 1551425 515.01
+## - Prob    1    237493 1602808 516.54
+## - Ed      1    409448 1774763 521.33
+## - Ineq    1    502909 1868224 523.75
+## 
+## Step:  AIC=509.37
+## Crime ~ M + Ed + Po1 + Po2 + M.F + Pop + NW + U1 + U2 + Wealth + 
+##     Ineq + Prob
+## 
+##          Df Sum of Sq     RSS    AIC
+## - NW      1     11675 1387523 507.77
+## - Po2     1     21418 1397266 508.09
+## - Pop     1     27803 1403651 508.31
+## - M.F     1     31252 1407100 508.42
+## - Wealth  1     35035 1410883 508.55
+## <none>                1375848 509.37
+## - U1      1     80954 1456802 510.06
+## + LF      1     10533 1365315 511.01
+## + Time    1      9996 1365852 511.03
+## + So      1      3046 1372802 511.26
+## - Po1     1    123896 1499744 511.42
+## - U2      1    190746 1566594 513.47
+## - M       1    217716 1593564 514.27
+## - Prob    1    226971 1602819 514.54
+## - Ed      1    413254 1789103 519.71
+## - Ineq    1    500944 1876792 521.96
+## 
+## Step:  AIC=507.77
+## Crime ~ M + Ed + Po1 + Po2 + M.F + Pop + U1 + U2 + Wealth + Ineq + 
+##     Prob
+## 
+##          Df Sum of Sq     RSS    AIC
+## - Po2     1     16706 1404229 506.33
+## - Pop     1     25793 1413315 506.63
+## - M.F     1     26785 1414308 506.66
+## - Wealth  1     31551 1419073 506.82
+## <none>                1387523 507.77
+## - U1      1     83881 1471404 508.52
+## + NW      1     11675 1375848 509.37
+## + So      1      7207 1380316 509.52
+## + LF      1      6726 1380797 509.54
+## + Time    1      4534 1382989 509.61
+## - Po1     1    118348 1505871 509.61
+## - U2      1    201453 1588976 512.14
+## - Prob    1    216760 1604282 512.59
+## - M       1    309214 1696737 515.22
+## - Ed      1    402754 1790276 517.74
+## - Ineq    1    589736 1977259 522.41
+## 
+## Step:  AIC=506.33
+## Crime ~ M + Ed + Po1 + M.F + Pop + U1 + U2 + Wealth + Ineq + 
+##     Prob
+## 
+##          Df Sum of Sq     RSS    AIC
+## - Pop     1     22345 1426575 505.07
+## - Wealth  1     32142 1436371 505.39
+## - M.F     1     36808 1441037 505.54
+## <none>                1404229 506.33
+## - U1      1     86373 1490602 507.13
+## + Po2     1     16706 1387523 507.77
+## + NW      1      6963 1397266 508.09
+## + So      1      3807 1400422 508.20
+## + LF      1      1986 1402243 508.26
+## + Time    1       575 1403654 508.31
+## - U2      1    205814 1610043 510.76
+## - Prob    1    218607 1622836 511.13
+## - M       1    307001 1711230 513.62
+## - Ed      1    389502 1793731 515.83
+## - Ineq    1    608627 2012856 521.25
+## - Po1     1   1050202 2454432 530.57
+## 
+## Step:  AIC=505.07
+## Crime ~ M + Ed + Po1 + M.F + U1 + U2 + Wealth + Ineq + Prob
+## 
+##          Df Sum of Sq     RSS    AIC
+## - Wealth  1     26493 1453068 503.93
+## <none>                1426575 505.07
+## - M.F     1     84491 1511065 505.77
+## - U1      1     99463 1526037 506.24
+## + Pop     1     22345 1404229 506.33
+## + Po2     1     13259 1413315 506.63
+## + NW      1      5927 1420648 506.87
+## + So      1      5724 1420851 506.88
+## + LF      1      5176 1421398 506.90
+## + Time    1      3913 1422661 506.94
+## - Prob    1    198571 1625145 509.20
+## - U2      1    208880 1635455 509.49
+## - M       1    320926 1747501 512.61
+## - Ed      1    386773 1813348 514.35
+## - Ineq    1    594779 2021354 519.45
+## - Po1     1   1127277 2553852 530.44
+## 
+## Step:  AIC=503.93
+## Crime ~ M + Ed + Po1 + M.F + U1 + U2 + Ineq + Prob
+## 
+##          Df Sum of Sq     RSS    AIC
+## <none>                1453068 503.93
+## + Wealth  1     26493 1426575 505.07
+## - M.F     1    103159 1556227 505.16
+## + Pop     1     16697 1436371 505.39
+## + Po2     1     14148 1438919 505.47
+## + So      1      9329 1443739 505.63
+## + LF      1      4374 1448694 505.79
+## + NW      1      3799 1449269 505.81
+## + Time    1      2293 1450775 505.86
+## - U1      1    127044 1580112 505.87
+## - Prob    1    247978 1701046 509.34
+## - U2      1    255443 1708511 509.55
+## - M       1    296790 1749858 510.67
+## - Ed      1    445788 1898855 514.51
+## - Ineq    1    738244 2191312 521.24
+## - Po1     1   1672038 3125105 537.93
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Model summary}
+\KeywordTok{summary}\NormalTok{(step)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + Ed + Po1 + M.F + U1 + U2 + Ineq + Prob, 
+##     data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -444.70 -111.07    3.03  122.15  483.30 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -6426.10    1194.61  -5.379 4.04e-06 ***
+## M              93.32      33.50   2.786  0.00828 ** 
+## Ed            180.12      52.75   3.414  0.00153 ** 
+## Po1           102.65      15.52   6.613 8.26e-08 ***
+## M.F            22.34      13.60   1.642  0.10874    
+## U1          -6086.63    3339.27  -1.823  0.07622 .  
+## U2            187.35      72.48   2.585  0.01371 *  
+## Ineq           61.33      13.96   4.394 8.63e-05 ***
+## Prob        -3796.03    1490.65  -2.547  0.01505 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 195.5 on 38 degrees of freedom
+## Multiple R-squared:  0.7888, Adjusted R-squared:  0.7444 
+## F-statistic: 17.74 on 8 and 38 DF,  p-value: 1.159e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{step}\OperatorTok{$}\NormalTok{anova}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Stepwise Model Path 
+## Analysis of Deviance Table
+## 
+## Initial Model:
+## Crime ~ M + So + Ed + Po1 + Po2 + LF + M.F + Pop + NW + U1 + 
+##     U2 + Wealth + Ineq + Prob + Time
+## 
+## Final Model:
+## Crime ~ M + Ed + Po1 + M.F + U1 + U2 + Ineq + Prob
+## 
+## 
+##       Step Df    Deviance Resid. Df Resid. Dev      AIC
+## 1                                31    1354946 514.6488
+## 2     - So  1    28.57405        32    1354974 512.6498
+## 3   - Time  1 10340.66984        33    1365315 511.0072
+## 4     - LF  1 10533.15902        34    1375848 509.3684
+## 5     - NW  1 11674.63991        35    1387523 507.7655
+## 6    - Po2  1 16706.34095        36    1404229 506.3280
+## 7    - Pop  1 22345.36638        37    1426575 505.0700
+## 8 - Wealth  1 26493.24677        38    1453068 503.9349
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#We can see that the step model predicts 8 predictors for the best model. }
+\CommentTok{#Now we will build a new regression model using just the 8 predictors and }
+\CommentTok{#evaluate the model}
+
+\CommentTok{#New model}
+\NormalTok{new<-}\KeywordTok{lm}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M }\OperatorTok{+}\StringTok{ }\NormalTok{Ed }\OperatorTok{+}\StringTok{ }\NormalTok{Po1 }\OperatorTok{+}\StringTok{ }\NormalTok{M.F }\OperatorTok{+}\StringTok{ }\NormalTok{U1 }\OperatorTok{+}\StringTok{ }\NormalTok{U2 }\OperatorTok{+}\StringTok{ }\NormalTok{Ineq }\OperatorTok{+}\StringTok{ }\NormalTok{Prob, }\DataTypeTok{data =}\NormalTok{ crime_data)}
+
+\CommentTok{#New model summary}
+\KeywordTok{summary}\NormalTok{(new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + Ed + Po1 + M.F + U1 + U2 + Ineq + Prob, 
+##     data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -444.70 -111.07    3.03  122.15  483.30 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -6426.10    1194.61  -5.379 4.04e-06 ***
+## M              93.32      33.50   2.786  0.00828 ** 
+## Ed            180.12      52.75   3.414  0.00153 ** 
+## Po1           102.65      15.52   6.613 8.26e-08 ***
+## M.F            22.34      13.60   1.642  0.10874    
+## U1          -6086.63    3339.27  -1.823  0.07622 .  
+## U2            187.35      72.48   2.585  0.01371 *  
+## Ineq           61.33      13.96   4.394 8.63e-05 ***
+## Prob        -3796.03    1490.65  -2.547  0.01505 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 195.5 on 38 degrees of freedom
+## Multiple R-squared:  0.7888, Adjusted R-squared:  0.7444 
+## F-statistic: 17.74 on 8 and 38 DF,  p-value: 1.159e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Now to further evaluate this model let use cross validation }
+\CommentTok{#Linear regression model using cross validation }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{train.control <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{5}\NormalTok{)}
+\NormalTok{model<-}\KeywordTok{train}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M }\OperatorTok{+}\StringTok{ }\NormalTok{Ed }\OperatorTok{+}\StringTok{ }\NormalTok{Po1 }\OperatorTok{+}\StringTok{ }\NormalTok{M.F }\OperatorTok{+}\StringTok{ }\NormalTok{U1 }\OperatorTok{+}\StringTok{ }\NormalTok{U2 }\OperatorTok{+}\StringTok{ }\NormalTok{Ineq }\OperatorTok{+}\StringTok{ }\NormalTok{Prob,}
+               \DataTypeTok{data =}\NormalTok{ crime_data, }\DataTypeTok{method=}\StringTok{'lm'}\NormalTok{,  }\CommentTok{#Linear Model2 with CV}
+               \DataTypeTok{trControl=}\NormalTok{train.control)          }
+\CommentTok{# CV Model summary}
+\KeywordTok{summary}\NormalTok{(model) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = .outcome ~ ., data = dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -444.70 -111.07    3.03  122.15  483.30 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -6426.10    1194.61  -5.379 4.04e-06 ***
+## M              93.32      33.50   2.786  0.00828 ** 
+## Ed            180.12      52.75   3.414  0.00153 ** 
+## Po1           102.65      15.52   6.613 8.26e-08 ***
+## M.F            22.34      13.60   1.642  0.10874    
+## U1          -6086.63    3339.27  -1.823  0.07622 .  
+## U2            187.35      72.48   2.585  0.01371 *  
+## Ineq           61.33      13.96   4.394 8.63e-05 ***
+## Prob        -3796.03    1490.65  -2.547  0.01505 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 195.5 on 38 degrees of freedom
+## Multiple R-squared:  0.7888, Adjusted R-squared:  0.7444 
+## F-statistic: 17.74 on 8 and 38 DF,  p-value: 1.159e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Note: The summary shows M.F and U1 are not significant based on the p-value}
+\CommentTok{#(0.05). We can further test this by removing both M.F and U1}
+
+\CommentTok{#New model}
+\NormalTok{new_}\DecValTok{1}\NormalTok{<-}\KeywordTok{lm}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M }\OperatorTok{+}\StringTok{ }\NormalTok{Ed }\OperatorTok{+}\StringTok{ }\NormalTok{Po1 }\OperatorTok{+}\StringTok{ }\NormalTok{U2 }\OperatorTok{+}\StringTok{ }\NormalTok{Ineq }\OperatorTok{+}\StringTok{ }\NormalTok{Prob, }\DataTypeTok{data =}\NormalTok{ crime_data)}
+
+\CommentTok{#New model summary}
+\KeywordTok{summary}\NormalTok{(new_}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + Ed + Po1 + U2 + Ineq + Prob, data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -470.68  -78.41  -19.68  133.12  556.23 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5040.50     899.84  -5.602 1.72e-06 ***
+## M             105.02      33.30   3.154  0.00305 ** 
+## Ed            196.47      44.75   4.390 8.07e-05 ***
+## Po1           115.02      13.75   8.363 2.56e-10 ***
+## U2             89.37      40.91   2.185  0.03483 *  
+## Ineq           67.65      13.94   4.855 1.88e-05 ***
+## Prob        -3801.84    1528.10  -2.488  0.01711 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 200.7 on 40 degrees of freedom
+## Multiple R-squared:  0.7659, Adjusted R-squared:  0.7307 
+## F-statistic: 21.81 on 6 and 40 DF,  p-value: 3.418e-11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Now to further evaluate this model let use cross validation }
+\CommentTok{#Linear regression model using cross validation }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{train.control <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{5}\NormalTok{)}
+\NormalTok{model1<-}\KeywordTok{train}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M }\OperatorTok{+}\StringTok{ }\NormalTok{Ed }\OperatorTok{+}\StringTok{ }\NormalTok{Po1 }\OperatorTok{+}\StringTok{ }\NormalTok{U2 }\OperatorTok{+}\StringTok{ }\NormalTok{Ineq }\OperatorTok{+}\StringTok{ }\NormalTok{Prob,}
+             \DataTypeTok{data =}\NormalTok{ crime_data, }\DataTypeTok{method=}\StringTok{'lm'}\NormalTok{,  }\CommentTok{#Linear Model2 with CV}
+             \DataTypeTok{trControl=}\NormalTok{train.control)  }
+
+\CommentTok{# CV Model summary}
+\KeywordTok{summary}\NormalTok{(model1) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = .outcome ~ ., data = dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -470.68  -78.41  -19.68  133.12  556.23 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5040.50     899.84  -5.602 1.72e-06 ***
+## M             105.02      33.30   3.154  0.00305 ** 
+## Ed            196.47      44.75   4.390 8.07e-05 ***
+## Po1           115.02      13.75   8.363 2.56e-10 ***
+## U2             89.37      40.91   2.185  0.03483 *  
+## Ineq           67.65      13.94   4.855 1.88e-05 ***
+## Prob        -3801.84    1528.10  -2.488  0.01711 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 200.7 on 40 degrees of freedom
+## Multiple R-squared:  0.7659, Adjusted R-squared:  0.7307 
+## F-statistic: 21.81 on 6 and 40 DF,  p-value: 3.418e-11
+\end{verbatim}
+
+\hypertarget{conclusion-stepwise-regression}{%
+\subsection{Conclusion: Stepwise
+Regression}\label{conclusion-stepwise-regression}}
+
+The whole purpose of stepwise regression is to eliminate insignificant
+factors and make the model simpler. This should not be at the cost of
+losing important variables.We can see that the new model with only 6
+factors produced an adjusted R2 of 73\%. The previous model with all the
+8 factors produced an adjusted R2 of 74\%. So, the metrics for both
+models is close so we might as well keep the 8 factors i n our model.
+
+\hypertarget{lasso}{%
+\subsection{2. LASSO}\label{lasso}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Let first separate response and predictor for the algorithm}
+\NormalTok{X<-crime_data[,}\DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{]}
+\NormalTok{y<-crime_data[}\DecValTok{16}\NormalTok{]}
+
+\CommentTok{#We need to also scale the data except the response data}
+\NormalTok{X_scale<-}\KeywordTok{scale}\NormalTok{(X)}
+
+\CommentTok{# Setting alpha = 1 implements Lasso regressions}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+\NormalTok{lasso_cv <-}\StringTok{ }\KeywordTok{cv.glmnet}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{as.matrix}\NormalTok{(X_scale), }\DataTypeTok{y=}\KeywordTok{as.matrix}\NormalTok{(y), }\DataTypeTok{alpha =} \DecValTok{1}\NormalTok{,}
+                     \DataTypeTok{nfolds =} \DecValTok{5}\NormalTok{,}\DataTypeTok{type.measure=}\StringTok{"mse"}\NormalTok{,}\DataTypeTok{family=}\StringTok{"gaussian"}\NormalTok{)}
+
+\CommentTok{# Plot cross-validation results}
+\KeywordTok{plot}\NormalTok{(lasso_cv)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-8_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Lambda that gives minimum mean cross-validated error}
+\NormalTok{lasso_cv}\OperatorTok{$}\NormalTok{lambda.min}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8.417125
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Selected Lambda and the corresponding coefficients}
+\KeywordTok{coef}\NormalTok{(lasso_cv, }\DataTypeTok{s=}\NormalTok{lasso_cv}\OperatorTok{$}\NormalTok{lambda.min)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 16 x 1 sparse Matrix of class "dgCMatrix"
+##                      1
+## (Intercept) 905.085106
+## M            91.605916
+## So           20.875623
+## Ed          143.159609
+## Po1         302.645106
+## Po2           .       
+## LF            .       
+## M.F          55.995942
+## Pop           .       
+## NW            7.047715
+## U1          -41.517302
+## U2           78.040254
+## Wealth       10.762412
+## Ineq        198.440786
+## Prob        -83.952696
+## Time          .
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Now using the above variables from the Lasso regression results and run a new }
+\CommentTok{#regression model}
+
+\NormalTok{new_from_lasso<-}\KeywordTok{lm}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M}\OperatorTok{+}\NormalTok{So}\OperatorTok{+}\NormalTok{Ed}\OperatorTok{+}\NormalTok{Po1}\OperatorTok{+}\NormalTok{M.F}\OperatorTok{+}\NormalTok{NW}\OperatorTok{+}\NormalTok{U1}\OperatorTok{+}\NormalTok{U2}\OperatorTok{+}\NormalTok{Ineq}\OperatorTok{+}\NormalTok{Prob}\OperatorTok{+}\NormalTok{Wealth, }
+                   \DataTypeTok{data =}\NormalTok{ crime_data)}
+\KeywordTok{summary}\NormalTok{(new_from_lasso)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + So + Ed + Po1 + M.F + NW + U1 + U2 + 
+##     Ineq + Prob + Wealth, data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -408.38  -96.14   -1.39  114.80  454.53 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -6.757e+03  1.313e+03  -5.147 1.03e-05 ***
+## M            9.148e+01  3.893e+01   2.350  0.02454 *  
+## So           3.335e+01  1.237e+02   0.270  0.78905    
+## Ed           1.746e+02  5.589e+01   3.124  0.00357 ** 
+## Po1          9.277e+01  2.019e+01   4.596 5.41e-05 ***
+## M.F          2.189e+01  1.453e+01   1.506  0.14101    
+## NW           1.549e+00  5.559e+00   0.279  0.78209    
+## U1          -5.248e+03  3.600e+03  -1.458  0.15380    
+## U2           1.667e+02  7.853e+01   2.123  0.04089 *  
+## Ineq         6.693e+01  2.022e+01   3.310  0.00217 ** 
+## Prob        -3.854e+03  1.770e+03  -2.177  0.03627 *  
+## Wealth       7.626e-02  9.737e-02   0.783  0.43878    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 201.3 on 35 degrees of freedom
+## Multiple R-squared:  0.794,  Adjusted R-squared:  0.7292 
+## F-statistic: 12.26 on 11 and 35 DF,  p-value: 5.334e-09
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Further based on the p-value we can remove So,M.F,NW,U1,Wealth and run a new model}
+\NormalTok{mod<-}\KeywordTok{lm}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M}\OperatorTok{+}\NormalTok{Ed}\OperatorTok{+}\NormalTok{Po1}\OperatorTok{+}\NormalTok{U2}\OperatorTok{+}\NormalTok{Ineq}\OperatorTok{+}\NormalTok{Prob, }
+        \DataTypeTok{data =}\NormalTok{ crime_data)}
+\KeywordTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + Ed + Po1 + U2 + Ineq + Prob, data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -470.68  -78.41  -19.68  133.12  556.23 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5040.50     899.84  -5.602 1.72e-06 ***
+## M             105.02      33.30   3.154  0.00305 ** 
+## Ed            196.47      44.75   4.390 8.07e-05 ***
+## Po1           115.02      13.75   8.363 2.56e-10 ***
+## U2             89.37      40.91   2.185  0.03483 *  
+## Ineq           67.65      13.94   4.855 1.88e-05 ***
+## Prob        -3801.84    1528.10  -2.488  0.01711 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 200.7 on 40 degrees of freedom
+## Multiple R-squared:  0.7659, Adjusted R-squared:  0.7307 
+## F-statistic: 21.81 on 6 and 40 DF,  p-value: 3.418e-11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The following model have all variables with significant values so we can keep }
+\CommentTok{#it.Also, it is the same model we got through stepwise regression}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{conclusion-lasso}{%
+\subsection{Conclusion: LASSO}\label{conclusion-lasso}}
+
+We used the Lasso algorithm where the alpha value is 1 for variable
+selection. The model gave 11 significant variables and these were
+subsequently used to build a regression model. Further the p-value was
+used to eliminate the insignificant variable and a final regression
+model was build which was the same as stepwise regression.
+
+\hypertarget{elastic-net}{%
+\subsection{2. Elastic Net}\label{elastic-net}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#For elastic net we use different values of alpha and see which model gives }
+\CommentTok{#us the best result.}
+
+\CommentTok{# Build the model using the values of alpha between 1-0}
+
+\NormalTok{metric<-}\KeywordTok{list}\NormalTok{()}
+\NormalTok{rng<-}\KeywordTok{as.list}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{0}\NormalTok{, }\DataTypeTok{to =} \DecValTok{100}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(rng)) \{}
+  \KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+\NormalTok{  elastic<-}\KeywordTok{cv.glmnet}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{as.matrix}\NormalTok{(X_scale), }\DataTypeTok{y=}\KeywordTok{as.matrix}\NormalTok{(y),}
+                          \DataTypeTok{alpha=}\NormalTok{i}\OperatorTok{/}\DecValTok{100}\NormalTok{,}\DataTypeTok{nfolds =} \DecValTok{10}\NormalTok{)}
+\NormalTok{  metric[i]=elastic}\OperatorTok{$}\NormalTok{glmnet.fit}\OperatorTok{$}\NormalTok{dev.ratio[}\KeywordTok{which}\NormalTok{(elastic}\OperatorTok{$}\NormalTok{glmnet.fit}\OperatorTok{$}\NormalTok{lambda}\OperatorTok{==}
+\StringTok{                                                        }\NormalTok{elastic}\OperatorTok{$}\NormalTok{lambda.min)]}
+\NormalTok{\}}
+
+\CommentTok{# Getting the best alpha from the metric list above}
+\NormalTok{mat<-}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Alpha=}\KeywordTok{unlist}\NormalTok{(rng), }\DataTypeTok{R2=}\KeywordTok{unlist}\NormalTok{(metric))}
+
+\CommentTok{#Sorting the dataframe for best alpha}
+\NormalTok{data_sort<-mat[}\KeywordTok{order}\NormalTok{(}\OperatorTok{-}\NormalTok{mat}\OperatorTok{$}\NormalTok{R2),]}
+
+\CommentTok{#Best Alpha}
+\NormalTok{best_alpha<-data_sort[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{#Now building a elastic net using the best alpha and evaluating the results}
+\NormalTok{best_mod<-}\KeywordTok{cv.glmnet}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{as.matrix}\NormalTok{(X_scale), }\DataTypeTok{y=}\KeywordTok{as.matrix}\NormalTok{(y),}
+                    \DataTypeTok{alpha=}\NormalTok{best_alpha,}\DataTypeTok{nfolds =} \DecValTok{10}\NormalTok{)}
+
+\CommentTok{# Plot cross-validation results}
+\KeywordTok{plot}\NormalTok{(best_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-8_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Lambda that gives minimum mean cross-validated error}
+\NormalTok{best_mod}\OperatorTok{$}\NormalTok{lambda.min}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 16.14329
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Selected Lambda and the corresponding coefficients}
+\KeywordTok{coef}\NormalTok{(best_mod, }\DataTypeTok{s=}\NormalTok{best_mod}\OperatorTok{$}\NormalTok{lambda.min)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 16 x 1 sparse Matrix of class "dgCMatrix"
+##                       1
+## (Intercept) 905.0851064
+## M            74.0174295
+## So           17.7133651
+## Ed           89.5805899
+## Po1         309.1881837
+## Po2           .        
+## LF            0.4790569
+## M.F          48.4916943
+## Pop           .        
+## NW            3.2640901
+## U1            .        
+## U2           24.9595863
+## Wealth        .        
+## Ineq        158.3327124
+## Prob        -74.8230648
+## Time          .
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Now using the above variables from the Elastic net and run a new }
+\CommentTok{#regression model}
+
+\NormalTok{new_from_elastic<-}\KeywordTok{lm}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M}\OperatorTok{+}\NormalTok{So}\OperatorTok{+}\NormalTok{Ed}\OperatorTok{+}\NormalTok{Po1}\OperatorTok{+}\NormalTok{LF}\OperatorTok{+}\NormalTok{M.F}\OperatorTok{+}\NormalTok{NW}\OperatorTok{+}\NormalTok{U2}\OperatorTok{+}\NormalTok{Ineq}\OperatorTok{+}\NormalTok{Prob, }
+                   \DataTypeTok{data =}\NormalTok{ crime_data)}
+\KeywordTok{summary}\NormalTok{(new_from_elastic)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + So + Ed + Po1 + LF + M.F + NW + U2 + 
+##     Ineq + Prob, data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -410.55 -121.42    5.76  110.54  550.24 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5725.4999  1184.4847  -4.834 2.49e-05 ***
+## M              90.4022    39.7548   2.274  0.02903 *  
+## So            122.7918   129.8958   0.945  0.35080    
+## Ed            168.7274    57.8799   2.915  0.00608 ** 
+## Po1           112.2077    16.6064   6.757 6.86e-08 ***
+## LF            622.6363  1227.0766   0.507  0.61496    
+## M.F            10.6943    14.6530   0.730  0.47021    
+## NW             -0.2803     5.7955  -0.048  0.96169    
+## U2             86.2961    49.4882   1.744  0.08973 .  
+## Ineq           57.4296    17.2560   3.328  0.00203 ** 
+## Prob        -4360.5001  1769.9432  -2.464  0.01867 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 206.6 on 36 degrees of freedom
+## Multiple R-squared:  0.7767, Adjusted R-squared:  0.7147 
+## F-statistic: 12.53 on 10 and 36 DF,  p-value: 5.374e-09
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Further based on the p-value we can remove So,LF,M.F,NW and run a new model}
+\NormalTok{mod_last<-}\KeywordTok{lm}\NormalTok{(Crime }\OperatorTok{~}\StringTok{ }\NormalTok{M}\OperatorTok{+}\NormalTok{Ed}\OperatorTok{+}\NormalTok{Po1}\OperatorTok{+}\NormalTok{U2}\OperatorTok{+}\NormalTok{Ineq}\OperatorTok{+}\NormalTok{Prob, }
+        \DataTypeTok{data =}\NormalTok{ crime_data)}
+\KeywordTok{summary}\NormalTok{(mod_last)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Crime ~ M + Ed + Po1 + U2 + Ineq + Prob, data = crime_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -470.68  -78.41  -19.68  133.12  556.23 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5040.50     899.84  -5.602 1.72e-06 ***
+## M             105.02      33.30   3.154  0.00305 ** 
+## Ed            196.47      44.75   4.390 8.07e-05 ***
+## Po1           115.02      13.75   8.363 2.56e-10 ***
+## U2             89.37      40.91   2.185  0.03483 *  
+## Ineq           67.65      13.94   4.855 1.88e-05 ***
+## Prob        -3801.84    1528.10  -2.488  0.01711 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 200.7 on 40 degrees of freedom
+## Multiple R-squared:  0.7659, Adjusted R-squared:  0.7307 
+## F-statistic: 21.81 on 6 and 40 DF,  p-value: 3.418e-11
+\end{verbatim}
+
+\hypertarget{conclusion-elastic-net}{%
+\subsection{Conclusion: Elastic Net}\label{conclusion-elastic-net}}
+
+We used the Elastic net algorithm where the alpha value is between 0-1
+for variable selection. The model gave 10 significant variables and
+these were subsequently used to build a regression model. Further the
+p-value was used to eliminate the insignificant variable and a final
+regression model was build which was the same as Lasso and stepwise
+regression.
+
+\end{document}
