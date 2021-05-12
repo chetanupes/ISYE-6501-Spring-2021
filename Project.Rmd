@@ -1,0 +1,157 @@
+---
+title: "Project"
+output: pdf_document
+---
+## Question
+
+This project should be done individually. 
+
+  1. Pick a project for which you think at least three different Analytics models 
+     might have been combined to create the solution.  
+
+  2. Think carefully and critically about what models might be used to create the 
+     solution, how they would be combined, what specific data might be needed to use 
+     the models, how it might be collected, and how often it might need to be 
+     refreshed and the models re-run.  DO NOT find a description online (or elsewhere) 
+     of what the company or organization actually did.  I want this project to be 
+     about your ideas, not about reading what someone else did.
+
+  3. Write a short report describing your answers to 3.
+
+## CASE STUDY
+I have chosen the following case from IBM for my project.
+https://www.ibm.com/case-studies/wintershall-dea-ai-exploration. A key challenge in early exploration 
+for oil and gas producers is making sense of vintage data. Time is critical and finding, organizing, and assessing this data can take months and years with significant financial and opportunity costs.
+
+## Goal
+
+The primary goal of this analysis is to assess the data at various stages of 
+asset development and decide if the company will be interested in developing 
+the project in full scale.
+ 
+This analysis will include all the elements of the data analysis such as 
+descriptive, predictive, and prescriptive. In this document I will outline the 
+whole process of how different stakeholders are involved along with what data, 
+models and inferences derived, and how we can tie up the whole process. The 
+stakeholders involved doing majority of the analysis work will be Geologists/
+Geophysicist, Reservoir/Production Engineers, Drilling engineers and Decision 
+makers (people who have the authority to take actions). 
+
+I will define the data used, questions which needs to answered in all 
+stages along with the inferences made using the format suggested: Given, Use and 
+To. There are many analyses involved in the life cycle of such a project and not 
+all of these analysis require analytics application as learned in this course and 
+thus, I will only be talking about some of the processes where we can effectively use 
+analytics. Since, we can have multiple solutions using different models, I will 
+state the models which I feel will give the best answer in a particular 
+scenario. 
+
+Let us find what all data we can have in doing this analysis:
+
+  1.	Seismic data
+  
+  2.	Well Log data
+  
+  3.  Drilling Data
+  
+  4.	Production Data and Reservoir Data 
+  
+## Exploration Phase: Geologists/Geophysicist and Reservoir Engineers
+
+Before drilling occurs, information gathering takes place by geologists and 
+geophysicists to identify potential of the project and the potential drilling 
+locations by answering the following questions:
+
+  •	Review seismic surveys. Seismic surveys use sound waves to produce images of 
+    the rock formations below the Earth’s surface. These surveys can be completed 
+    in two dimensional (2D) or three dimensional (3D) formats. 
+
+        Given: The seismic data
+
+        Use: Deep-learning methods such as Neural Network 
+
+        To: Identify the geologic structure
+
+  •	Logs consist of data derived from various wireline tools which are run into 
+    the wellbore after drilling. While being pulled back up to the surface, the tools
+    measure various characteristics of the rock formations and fluids. From these 
+    measurements, we can determine formation lithology (eg. sand, shale, limestone, 
+    etc.), porosity, permeability, and fluid type.
+
+        Given: The logging data
+
+        Use: k-Mean Clustering which is an unsupervised learning technique. We can 
+             also used supervised learning techniques such as ensemble models 
+             (Random forest) or even Regression to predict /characterize the lithology 
+             based on the past data where we know the factors which can be used to 
+             identify the lithology   
+
+        To: Create lithology groups and further analyse these groups to extract porosity, 
+            permeability and fluid type using domain knowledge.
+
+Once all the above data is reviewed, if there appears to be a promising prospect, 
+the Geology team will recommend to the company where to drill an “exploration 
+well”. This exploration well will confirm whether there is oil or gas present 
+and to measure the volume of the resource. Also, the data from the exploration 
+is used build a static reservoir model which will used to develop a dynamic 
+model which can simulate the overall future performance of the assets by bringing 
+in new wells and managing the existing wells.
+
+## Drilling & Completion: Drilling Engineers, Geologists and Reservoir Engineers
+
+Once minerals are confirmed and surface leases obtained, the company is ready to 
+drill. Analytics can be used extensively in drilling to handle drilling problems 
+such as stick slip vibration/hole cleaning, pipe failures, loss of circulation, 
+BHA whirl, stuck pipe incidents etc. This can save millions in replacement costs 
+and maintenance, NPV, lost production, minimize industry bias, and drive 
+intelligent business decisions.
+
+      Given: Real time drilling data. This data includes both surface and downhole 
+             senser data.
+      
+      Use: Supervised learning algorithms such as Decision Tree/Random forest to 
+           divide the data into different dysfunctions using domain knowledge. Also, 
+           we can use regression to predict the dysfunctions if we know of the factors 
+           and the signature of the dysfunctions from past/domain knowledge. 
+      
+      To: Help the drilling team to troubleshoot/ identify potential dysfunctions 
+          real time saving business millions in lost productivity.
+      
+The information gained by drilling each well can be used in the future to further improve drilling efficiency. Once the drilling is complete and the company is confident in the success of the well, the well is prepared for production, through a process called completion. Along with this example there can be other cases where analytics can be used, such as how we can optimize the whole drilling operation which involves movement of the rig to the site, all the required equipment’s needed or how we can minimize rig downtime. For example: If we have one drilling rigs and 5 drilling locations, how can we use to optimize the movement of the rig from one location to other with all the constraints around it.
+
+## Production & Processing: Production and Reservoir Engineers
+
+Production is the process of bringing hydrocarbons to the surface where the crude 
+oil or natural gas is prepared for processing. We can again use analytics to help 
+us a wide variety of applications. 
+
+  •	Natural Gas generally flows under its own pressure through the wellhead into the gathering system pipeline. The      gas from the pipelines flow to and is processed at the compressor station, which takes the water and impurities      out of the gas by means of inlet water knock out vessels or scrubbers and is compressed through to a dehydrator      to dry the gas and on to a sales line.
+
+  •	Oil production is more complicated and varies depending on the weight of the oil, how easily it flows, the           porosity and permeability of the rock, the pressure in the oil reservoir and the pressure of other fluids such as     natural gas and water in the reservoir. 
+
+        Given: Production data and reservoir data which can include fluid properties 
+               and reservoir pressure data 
+
+        Use: Time series analysis 
+
+        To: Predict the future production for a well. This in turn can tell us about 
+            the economic limit and the productive life of the well before abandonment. 
+
+  •	Some wellbores may only require production tubing for gas and/or oil to flow to surface, but in most cases a rod     string and bottom hole pump is lowered inside the production tubing and controlled at surface which is referred      to as artificial lift method.Also, this data can be combined with the facility data to show the whole life cycle     of the project together. 
+        
+        Given: Based on the data available for each well with all the surface and 
+               downhole constraints 
+
+        Use: Simulation. This is a complex process with lots of pieces tied together 
+             thus simulation is the best way to understand how all the process work well together.
+
+        To: Optimize the production for each well
+
+We can combine all this information to create a dynamic reservoir model to help the company understand how to manage and optimize the existing assets at different levels. Also, the model can be used to come up with an efficient and more informed solution/recommendation regarding drilling new wells and suggestions on how to optimize the productivity of the existing wells.
+
+Let’s now tie up everything in a concise way. Below is a flow chart of the whole process.
+
+![Process](C:/Users/cheta/OneDrive/Desktop/Flowchart - Frame 1.jpg)
+
+
+
