@@ -1,0 +1,133 @@
+---
+title: "Assignment 4"
+output: pdf_document
+---
+## Question 7.1
+
+Describe a situation or problem from your job, everyday life, current events, 
+etc., for which exponential smoothing would be appropriate. What data would you
+need? Would you expect the value of alpha (the first smoothing parameter) to be 
+closer to 0 or 1, and why?
+
+
+## Answer 7.1
+
+As a production engineer I deal with production data. The data is of high 
+frequency collected every hour. I can use the exponential smoothing method to 
+get a smoother trend without loosing the sanctity of the data. In terms of value 
+of alpha I would expect it to be low telling me that the forecasts are based on 
+both recent and less recent observations (although  more weight is 
+placed on recent observations).
+
+
+## Question 7.2
+
+Using the 20 years of daily high temperature data for Atlanta (July through 
+October) from Question 6.2 (file temps.txt), build and use an exponential 
+smoothing model to help make a judgment of whether the unofficial end of summer
+has gotten later over the 20 years.  (Part of the point of this assignment is 
+for you to think about how you might use exponential smoothing to answer this 
+question. Feel free to combine it with other models if you’d like to. There’s 
+certainly more than one reasonable approach.) 
+
+## Answer 7.2 
+
+* Approach 1: Using Excel
+
+Refer to Holt's Winter excel file (All formula's are in the excel file)
+
+The original temp data was tweaked to create a table representing data for 
+each year having the average temperature data for the four months. This step 
+makes it ready to apply Holt Winter's method. The data is similar in look 
+to quarterly temp data for each year with the each month can be envisioned as a 
+quarter.  
+
+Holt Winters method was applied to the data and a forecast was also generated.
+Alpha, beta and gamma were found using the solver functionality in excel with the 
+constrain of minimizing the RMSE. The question here is to find if the summer 
+have gotten longer.We have already established this fact in Assignment 3 
+that the summers starts to end from the second week of September. Now if the 
+summers would have gotten longer, then technically the average September 
+temperature must rise. The data does not show any increasing/decreasing trend.
+
+Thus, no conclusive evidence whether of the summers are getting longer in 
+Atlanta
+
+* Approach 2: Using R and excel
+
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(TTR)
+library(forecast)
+library(xlsx)
+```
+
+```{r warning=FALSE}
+
+#Getting the data
+temp<-read.table('temps.txt',sep = "", header = TRUE)
+
+#Converting the data to make it ready for time series analysis. The code below 
+#puts the data in a long list containing the yearly data with temperatures 
+#for the four months
+con<-as.vector(unlist(temp[,2:21]))
+
+#Time series data
+dt<-ts(con, start = 1996, frequency = 123)
+
+#Plotting the time series data
+plot.ts(dt)
+
+#Decomposing the data to understand its components. This step helps to see how 
+#to use Holt Winters method. 
+plot(decompose(dt))
+
+#The above plot shows that there is seasonality in the data but there is no 
+#specific trend in the data (increasing/ decreasing)
+
+#Note
+#The additive model is useful when the seasonal variation is relatively constant
+#over time.The multiplicative model is useful when the seasonal variation 
+#increases over time. Thus, we will use the additive model for Holt Winter's 
+#since seasonal variations are constant.
+ 
+#Applying Holt Winter's method taking care of level, trend and seasonality 
+
+hw<-HoltWinters(dt, alpha =NULL , beta=NULL, gamma = NULL, 
+                seasonal = 'additive')
+
+#Root Mean Square Error
+sqrt(hw$SSE)
+
+#Plotting the results
+plot(hw)
+
+plot(hw$fitted[,1]) #Predicted data
+plot(hw$fitted[,2]) #Level
+plot(hw$fitted[,3]) #Trend
+plot(hw$fitted[,4]) #Seasonality
+
+#Looking into the individual components of the fitted data. The trend data is 
+#flat which is in agreement with our earlier conclusion of decompose data. Now, 
+#the seasonality data is extracted from the analysis results do CUSUM and see 
+#if we can detect any changes in the seasonal factors which are equivalent to 
+#the temperature changes.
+
+#Extracting the seasonality data as a matrix and exporting it into a csv
+seas<-matrix(hw$fitted[,4], nrow = 123)
+write.xlsx(seas, "C:/Users/cheta/OneDrive/Desktop/seas.xlsx")
+```
+
+## Conclusion: 
+
+Refer to the Seasonality-CUSUM excel file
+
+The seasonality factor data is analyzed using CUSUM. Using the similar approach 
+as in assignment 3, the first step was to calculate the mu and SD using the data 
+for the first five years until September as summers official end in September. 
+Different combinations of C and T was tried but the data did not give any 
+concrete  evidence of the summers getting longer in Atlanta. Thus, this analysis 
+again remains inconclusive in proving if the summers have gotten longer in 
+Atlanta.  
+
