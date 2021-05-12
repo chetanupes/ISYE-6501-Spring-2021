@@ -1,0 +1,171 @@
+---
+title: "Assignment 6"
+output: html_document
+---
+## Question 9.1
+
+Question 9.1
+
+Using the same crime data set uscrime.txt as in Question 8.2, apply Principal Component Analysis and then create a regression model using the first few principal components.  Specify your new model in terms of the original variables (not the principal components), and compare its quality to that of your solution to Question 8.2.  You can use the R function prcomp for PCA. (Note that to first scale the data, you can include scale. = TRUE to scale as part of the PCA function. Don’t forget that, to make a prediction for the new city, you’ll need to unscale the coefficients (i.e., do the scaling calculation in reverse)!)
+
+## Answer 9.1
+
+```{r message=FALSE, warning=FALSE}
+library(psych)
+library(ggbiplot)
+library(ggplot2)
+```
+
+# Model 1
+
+```{r message=TRUE, warning=FALSE}
+#Getting the training and test data
+crime_data<-read.table('uscrime.txt', sep = "", header = TRUE )
+test<-read.table('test.txt', sep="", header = TRUE)
+
+#Splitting the data to predictors and response
+X<-crime_data[,1:15]
+y<-crime_data[16]
+
+#Applying Principle component analysis  
+pca<-prcomp(X, scale. = TRUE, center = TRUE) 
+
+#center and scale in the above formula refers to respective mean and standard 
+#deviation of the variables that are used for normalization prior to 
+#implementing PCA
+
+#Understanding the results
+print(pca)
+
+#Each PC is a normalized linear combinations of original variables
+#Rotation or loading are the coefficients of the liner combinations of the 
+#continuous variables. These value lie between 1 and -1 and show the degree
+#of correlation with the principle component
+
+summary(pca)
+
+#The proportion of variance in the summary shows the how well the PC can explain 
+#the variability in the data. Here we can see PC1 alone explains 40% of the 
+#variability in the data followed by PC2 19% and PC3 13%. If we need to cover 
+#upto 90% of the variability in the data we need to consider PC upto 7
+
+#Plotting the Principle components
+
+pairs.panels(pca$x, gap=0)
+#This plot shows the orthogonality of the principle components as you can see 
+#there is no correlation between the PC's and thus we can say we have removed 
+#the multi-collinearity issue which need to handeld before doing regression.
+
+#Visualizing principle components using Bi-Plots
+ggbiplot(pca, 
+         obs.scale=1,
+         var.axes=TRUE,
+         var.scale = 1,
+         groups = crime_data$Crime,
+         circle = TRUE,
+         )
+
+#Understanding this plot. Closer the vectors more the correlation between them. 
+#The plot shows vectors such as wealth ,Ed, PO2, Po1 have positive correlation 
+#with PC1 as they are on the right side of the 0 mark. In other words the vectors 
+#on the right side of the 0 mark on the PC1 axis have positive contribution on PC1
+
+#Selecting number of PC using the variance plot
+screeplot(pca, type = "l")
+
+#Now building a regression model using the principle components. 
+#We will use the first 4 PC using the plot above as they encapsulate 80 of the 
+#variability in the data
+
+#Creating a new data with the PC
+new_data<-as.data.frame(cbind(pca$x[,1:4], crime_data$Crime))
+
+#Doing a Linear regression on our new model have 4 principle components
+new_model<-lm(V5~.,data = new_data)
+summary(new_model)
+
+#the new model shows a low R2 and adjusted R2 value as compared to the linear
+#regression model done in Assignment 1
+
+#Finding the model coefficients in terms of the original variables 
+coeff <- pca$rotation[,1:4]%*%new_model$coefficients[-1]
+
+#Converting standardized coefficient and intercept back to original variables
+s<-sapply(crime_data[,1:15], sd) #SD of each variable in the original dataset
+m<-sapply(crime_data[,1:15], mean)#Mean of each variable in the original dataset
+intercept<-new_model$coefficients[1]
+
+
+coeff_new<-coeff/s
+intercept_new<-intercept-sum(coeff*m/s)
+
+res<-as.matrix(X)%*%coeff_new+intercept_new #Prediction on the training data
+pre<-as.matrix(test)%*%coeff_new+intercept_new #Prediction on the test data from
+                                                #assignment 5
+print(pre)
+
+#Calculating R2
+r2<-1-sum((res-crime_data$Crime)^2)/sum((crime_data$Crime-mean(crime_data$Crime))^2)
+print(r2)
+
+#Comparison with the previous assignment
+
+#Linear regression model  
+model1<-lm(Crime~.,data = crime_data)          
+
+summary(model1) # Model summary
+pred<-predict(model1, test) #Prediction on test data
+```
+
+# Conclusions: Model 1
+
+In the above exercise we applied PCA to our data and then used the first four 
+principle components were used to run a linear regression model. Clearly, the 
+PCA model performed worse then the ordinal linear regression model which can 
+be seen by the low R2 values. Note,  that for the above model the principle 
+components only contained 80% of the variance. Thus, to test further we can add 
+more principle components and see the results.
+
+# Model 2 
+
+Models with 7 principle components covering 92% variance
+
+```{r message=TRUE, warning=FALSE}
+
+#Creating a new data with the PC
+new_data_7p<-as.data.frame(cbind(pca$x[,1:7], crime_data$Crime))
+
+#Doing a Linear regression on our new model have 7 principle components
+new_model_7p<-lm(V8~.,data = new_data_7p)
+summary(new_model_7p)
+
+#the new model shows a low R2 and adjusted R2 value as compared to the linear
+#regression model done in Assignment 1
+
+#Finding the model coefficients in terms of the original variables 
+coeff_7p <- pca$rotation[,1:7]%*%new_model_7p$coefficients[-1]
+
+#Converting standardized coefficient and intercept back to original variables
+s<-sapply(crime_data[,1:15], sd) #SD of each variable in the original dataset
+m<-sapply(crime_data[,1:15], mean)#Mean of each variable in the original dataset
+intercept_7p<-new_model_7p$coefficients[1]
+
+
+coeff_new_7p<-coeff_7p/s
+intercept_new<-intercept_7p-sum(coeff_7p*m/s)
+
+res_7p<-as.matrix(X)%*%coeff_new_7p+intercept_new #Prediction on the training data
+pre_7p<-as.matrix(test)%*%coeff_new_7p+intercept_new #Prediction on the test data from
+                                                #assignment 5
+print(pre_7p)
+
+#Calculating R2
+r2<-1-sum((res_7p-crime_data$Crime)^2)/sum((crime_data$Crime-mean(crime_data$Crime))^2)
+print(r2)
+```
+# Conclusion: Model 2
+
+We can see that even after adding 7 principle components the the model quality 
+did not improve. We can continue adding more PC but it defies one of the main 
+purpose of reducing dimensions. Thus in this case PCA was not very helpful and 
+we are better off using the ordinary linear regression model.
