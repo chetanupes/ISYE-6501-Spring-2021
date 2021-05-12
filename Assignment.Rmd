@@ -1,0 +1,175 @@
+---
+title: "Assignment"
+output: pdf_document
+---
+## Question 15.1
+
+Describe a situation or problem from your job, everyday life, current events, 
+etc., for which optimization would be appropriate. What data would you need?
+
+## Answer 15.1
+As a production engineer I have to make sure that each well production is 
+optimized based on the current state of things. For a simple example we need to 
+maintain the productivity of a well by making sure that it is economic to flow. 
+For this we do optimization. One way to do this is to plan how the fluids will be 
+lifted during the well's lifetime. Here the variables are tubing sizes, 
+reservoir pressure, flow rate etc. The constraints will be at what rate and 
+pressure we want to use with the current size of the tubing. 
+The optimization model for this scenario will be to maximize the productivity 
+of the well by keeping cost as low by avoiding workovers.
+
+
+## Question 14.1
+
+The breast cancer data set breast-cancer-wisconsin.data.txt from has missing 
+values.
+1.	Use the mean/mode imputation method to impute values for the missing data.
+2.	Use regression to impute values for the missing data.
+3.	Use regression with perturbation to impute values for the missing data.
+4.	(Optional) Compare the results and quality of classification models (e.g., 
+    SVM, KNN) build using 
+    (1) the data sets from questions 1,2,3; 
+    (2) the data that remains after data points with missing values are removed; 
+    (3) the data set when a binary variable is introduced to indicate missing 
+        values.
+
+```{r message=TRUE, warning=FALSE}
+#Getting the data
+data<-read.table('breast-cancer-wisconsin.data.txt', sep = ',', header = TRUE,
+                 stringsAsFactors = FALSE)
+
+#Renaming response variable
+colnames(data)[colnames(data) == 'X2.1'] <- 'R'
+
+
+#Finding columns with missing data
+apply(data, 2, function(x) which(x == "?"))
+
+#From the above code we can see that only one column X1.3 has missing 
+#values
+
+```
+## 1. Use Mean/Mode Imputaion 
+
+For this question we can see that the most of data is in the form of a factor. 
+So logically it seems appropriate to do a mode imputation. But we will do both 
+imputations here.
+
+```{r warning=FALSE, message=TRUE}
+
+#Using Mean imputation
+df<-data
+df<-as.data.frame((apply(df,2,as.numeric))) #Converting data type to Numeric
+df[is.na(df[,7]),7]<-round(mean(df$X1.3, na.rm = TRUE),digits = 2)
+
+#Using Mode imputation
+df1<-data
+
+#Creating a function to calculate mode
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+#Mode for the column Bare Nuclei
+d<-Mode(df$X1.3)
+
+#Now replacing the '?' in the column with the mode value
+df1$X1.3[df1$X1.3=='?']<-d
+
+```
+## 1. Use regression to impute values for the missing data 
+
+```{r message=FALSE, warning=FALSE}
+library(MASS)
+library(glmnet)
+library(plyr) 
+```
+
+```{r message=TRUE, warning=FALSE}
+
+#Getting the data
+cancer<-read.table('breast-cancer-wisconsin.data.txt', sep = ',', header = TRUE,
+                 stringsAsFactors = FALSE)
+
+#Separating the missing value rows and creating two data frames
+idx<-which(cancer$X1.3=='?')
+miss_data<-cancer[idx,]
+
+#Modeling without the missing data
+new_data<-cancer[-idx,]
+
+#Building the model
+model<-lm(X1.3~X5+X1+X1.1+X1.2+X3+X1.4+X1.5+X2.1, data=new_data)
+
+#Model Summary
+summary(model)
+
+#The model is only approximately 70% accurate. Applying the variable selection 
+#method we learned for better prediction
+
+##Using Step-wise regression and evaluating the results
+ste<-stepAIC(model, scope = list(lower = X1.3~1, upper = X1.3~X5+X1+X1.1+X1.2+
+                                   X3+X1.4+X1.5+X2.1),
+             direction = 'both',trace = 1)
+summary(ste)
+
+#We can see that the step model predicts 6 predictors for the best model.
+#Now we will build a new regression model using just the 6 predictors and
+#evaluate the model
+
+#New model
+new<-lm(X1.3 ~ X1 + X1.1 + X1.2 + X3 + X1.4 + X2.1, data = new_data)
+#New model summary
+summary(new)
+
+#Testing data
+test<-miss_data[,c('X1','X1.1','X1.2','X3','X1.4','X2.1')]
+
+#Predicting
+pred<-predict(new,test)
+
+#Binding the predicted data together
+total<-data
+total<-replace(data,data=='?',round(pred,digits = 0))
+
+```
+## Use regression with perturbation to impute values for the missing
+
+```{r message=TRUE, warning=FALSE}
+set.seed(42)
+d<-data
+imp <- rnorm(nrow(miss_data), pred, sd(pred))
+
+#Data also contains negative values using perturbation, thus it requires futher
+#investigation
+
+#Binding the predicted data together
+purt<-data
+purt<-replace(data,data=='?',round(imp,digits = 0))
+```
+
+So, we imputed the data using Mean, Mode, Regression and Perturbation. Next step 
+is to see if these imputations have helped in classification. I will use only 
+KNN for this work. 
+
+
+## Compare the results and quality of classification models
+
+![Image 1.](C:/Users/cheta/OneDrive/Desktop/image1.png)
+
+![Image 2.](C:/Users/cheta/OneDrive/Desktop/image2.png)
+
+![Image 3.](C:/Users/cheta/OneDrive/Desktop/image3.png)
+
+![Image 4.](C:/Users/cheta/OneDrive/Desktop/image4.png)
+
+![Table 5.](C:/Users/cheta/OneDrive/Desktop/image5.png)
+
+
+## Conclusion
+The code is also attached with this assignment for reference. After completing 
+this part of the exercise the conclusions are as follows:
+
+We can see from the accuracy calculated with and without imputed data to be in 
+the same range and thus does not give good evidence that imputation of any kind 
+was helpful for this example.
