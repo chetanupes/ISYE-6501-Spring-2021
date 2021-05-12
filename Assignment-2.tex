@@ -1,0 +1,644 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Assignment 2},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Assignment 2}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{question-3.1-a}{%
+\subsection{Question 3.1 (a)}\label{question-3.1-a}}
+
+\begin{itemize}
+\tightlist
+\item
+  Using cross-validation (do this for the k-nearest-neighbors model; SVM
+  is optional)
+\end{itemize}
+
+\hypertarget{answer-3.1-a}{%
+\subsection{Answer 3.1 (a)}\label{answer-3.1-a}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Doing cross validation manually}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Importing libraries }
+\KeywordTok{library}\NormalTok{(kknn)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+
+\CommentTok{#Reading the data}
+\NormalTok{credit_data<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{'credit_card_data-headers.txt'}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#Viewing the data}
+\KeywordTok{head}\NormalTok{(credit_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   A1    A2    A3   A8 A9 A10 A11 A12 A14 A15 R1
+## 1  1 30.83 0.000 1.25  1   0   1   1 202   0  1
+## 2  0 58.67 4.460 3.04  1   0   6   1  43 560  1
+## 3  0 24.50 0.500 1.50  1   1   0   1 280 824  1
+## 4  1 27.83 1.540 3.75  1   0   5   0 100   3  1
+## 5  1 20.17 5.625 1.71  1   1   0   1 120   0  1
+## 6  1 32.08 4.000 2.50  1   1   0   0 360   0  1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Summarizing the data}
+\KeywordTok{str}\NormalTok{(credit_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    654 obs. of  11 variables:
+##  $ A1 : int  1 0 0 1 1 1 1 0 1 1 ...
+##  $ A2 : num  30.8 58.7 24.5 27.8 20.2 ...
+##  $ A3 : num  0 4.46 0.5 1.54 5.62 ...
+##  $ A8 : num  1.25 3.04 1.5 3.75 1.71 ...
+##  $ A9 : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ A10: int  0 0 1 0 1 1 1 1 1 1 ...
+##  $ A11: int  1 6 0 5 0 0 0 0 0 0 ...
+##  $ A12: int  1 1 1 0 1 0 0 1 1 0 ...
+##  $ A14: int  202 43 280 100 120 360 164 80 180 52 ...
+##  $ A15: int  0 560 824 3 0 0 31285 1349 314 1442 ...
+##  $ R1 : int  1 1 1 1 1 1 1 1 1 1 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Setting the seed for reproducibility}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+
+\CommentTok{#Shuffling the data randomly}
+\NormalTok{credit_data<-credit_data[}\KeywordTok{sample}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(credit_data)),]}
+
+\CommentTok{#Creating 10 groups for cross validation. One can also user input to decide }
+\CommentTok{#on the number of cross validation groups. Will be more automated.}
+\NormalTok{group <-}\StringTok{ }\KeywordTok{cut}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(credit_data)),}\DataTypeTok{breaks=}\DecValTok{10}\NormalTok{,}\DataTypeTok{labels=}\OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Building the Model}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pre<-}\KeywordTok{list}\NormalTok{() }\CommentTok{#Creating an empty list to store predictions}
+\NormalTok{accu<-}\KeywordTok{list}\NormalTok{() }\CommentTok{#Creating an empty list to store accuracy}
+\ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{)\{   }\CommentTok{#Loop to test different k between 1-50}
+\NormalTok{  acc1=}\DecValTok{0}           \CommentTok{#Setting Accuracy to 0 for new value of k}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)\{ }\CommentTok{#Loop to test k-fold cross validation}
+\NormalTok{    ind<-}\KeywordTok{which}\NormalTok{(group}\OperatorTok{==}\NormalTok{i, }\DataTypeTok{arr.ind =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{#This create a set using the group }
+                                          \CommentTok{#defined above.}
+\NormalTok{    model_knn =}\StringTok{ }\KeywordTok{kknn}\NormalTok{(R1}\OperatorTok{~}\NormalTok{.,}
+                     \DataTypeTok{train=}\NormalTok{credit_data[}\OperatorTok{-}\NormalTok{ind,], }
+                     \DataTypeTok{test=}\NormalTok{credit_data[ind,], }
+                     \DataTypeTok{k =}\NormalTok{ j, }
+                     \DataTypeTok{scale =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{    pred_knn =}\StringTok{ }\KeywordTok{fitted}\NormalTok{(model_knn)}
+\NormalTok{    pre[[i]]<-}\KeywordTok{ifelse}\NormalTok{(pred_knn}\OperatorTok{>}\FloatTok{0.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{    acc1=acc1}\OperatorTok{+}\KeywordTok{sum}\NormalTok{(pre[[i]] }\OperatorTok{==}\StringTok{ }\NormalTok{credit_data[ind,}\DecValTok{11}\NormalTok{])}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(credit_data[ind,])}
+\NormalTok{  \}}
+\NormalTok{  accu[[j]]=acc1}\OperatorTok{/}\DecValTok{10} \CommentTok{# Average accuracy for the jth value representing k}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Plotting k vs accuracy}
+\NormalTok{dat<-}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k=}\KeywordTok{list}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{), }\DataTypeTok{Accuracy=}\KeywordTok{unlist}\NormalTok{(accu))}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{dat,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{X1}\FloatTok{.50}\NormalTok{,}\DataTypeTok{y=}\NormalTok{Accuracy))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{color=}\StringTok{'red'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Sorting the dataframe to get best k}
+
+\NormalTok{dat_sort<-dat[}\KeywordTok{order}\NormalTok{(}\OperatorTok{-}\NormalTok{dat}\OperatorTok{$}\NormalTok{Accuracy),]}
+\NormalTok{best_k<-dat_sort[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\KeywordTok{message}\NormalTok{(}\StringTok{'Best k: '}\NormalTok{,best_k)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Best k: 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{message}\NormalTok{(}\StringTok{'Accuracy of the model using the best k: '}\NormalTok{, dat_sort[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Accuracy of the model using the best k: 0.84993006993007
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Now trying the same thing using cv.kknn}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{accu_new<-}\KeywordTok{list}\NormalTok{() }\CommentTok{#Creating an empty list to store accuracy}
+
+\CommentTok{#Model fit}
+\ControlFlowTok{for}\NormalTok{ (m }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{)\{ }\CommentTok{#Testing different k's}
+  \KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+\NormalTok{  kNN_fit<-}\KeywordTok{cv.kknn}\NormalTok{(R1}\OperatorTok{~}\NormalTok{.,}\DataTypeTok{data=}\NormalTok{credit_data, }
+                   \DataTypeTok{scale=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{k =}\NormalTok{ m, }\DataTypeTok{kcv =} \DecValTok{10}\NormalTok{)}
+\NormalTok{  pred<-}\KeywordTok{ifelse}\NormalTok{(kNN_fit[[}\DecValTok{1}\NormalTok{]][,}\DecValTok{2}\NormalTok{]}\OperatorTok{>}\FloatTok{0.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{  accu_new[[m]]=}\KeywordTok{sum}\NormalTok{(pred}\OperatorTok{==}\NormalTok{credit_data[,}\DecValTok{11}\NormalTok{])}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(credit_data)}
+\NormalTok{\}}
+
+\CommentTok{#Plotting k vs accuracy}
+\NormalTok{dat_new<-}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k=}\KeywordTok{list}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{), }\DataTypeTok{Accuracy=}\KeywordTok{unlist}\NormalTok{(accu_new))}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{dat_new,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{X1}\FloatTok{.50}\NormalTok{,}\DataTypeTok{y=}\NormalTok{Accuracy))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{color=}\StringTok{'red'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Sorting the dataframe to get best k}
+
+\NormalTok{dat_sort_new<-dat_new[}\KeywordTok{order}\NormalTok{(}\OperatorTok{-}\NormalTok{dat_new}\OperatorTok{$}\NormalTok{Accuracy),]}
+\NormalTok{best_k_new<-dat_sort_new[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\KeywordTok{message}\NormalTok{(}\StringTok{'Best k: '}\NormalTok{,best_k_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Best k: 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{message}\NormalTok{(}\StringTok{'Accuracy of the model using the best k: '}\NormalTok{, dat_sort_new[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Accuracy of the model using the best k: 0.845565749235474
+\end{verbatim}
+
+\hypertarget{answer-3.1-b}{%
+\subsection{Answer 3.1 (b)}\label{answer-3.1-b}}
+
+\begin{itemize}
+\tightlist
+\item
+  Splitting the data into training, validation, and test data sets (pick
+  either KNN or SVM; the other is optional).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#We will use the caret library to do the splitting}
+\KeywordTok{library}\NormalTok{(caret)}
+\KeywordTok{library}\NormalTok{(kknn)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Getting the data}
+\NormalTok{credit_data<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{'credit_card_data-headers.txt'}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#The data will be divided with 70% Train, 15% Validation and 15% Test data}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+
+\CommentTok{#Using cresteDataPartion }
+\NormalTok{train_index<-}\KeywordTok{createDataPartition}\NormalTok{(}\DataTypeTok{y=}\NormalTok{credit_data}\OperatorTok{$}\NormalTok{R1, }\DataTypeTok{p=}\FloatTok{0.7}\NormalTok{, }
+                                \DataTypeTok{times =} \DecValTok{1}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\CommentTok{#Training data}
+\NormalTok{train_data<-credit_data[train_index,]}
+
+\CommentTok{#Validation and testing data, this data is further divided into two sets}
+\NormalTok{rest_data<-credit_data[}\OperatorTok{-}\NormalTok{train_index,]}
+\NormalTok{rest_index<-}\KeywordTok{createDataPartition}\NormalTok{(}\DataTypeTok{y=}\NormalTok{rest_data}\OperatorTok{$}\NormalTok{R1, }\DataTypeTok{p=}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{times =} \DecValTok{1}\NormalTok{,}\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{#Validation data}
+\NormalTok{val_data<-rest_data[rest_index,]}
+
+\CommentTok{#Testing data}
+\NormalTok{test_data<-rest_data[}\OperatorTok{-}\NormalTok{rest_index,]}
+
+\CommentTok{#Using kkNN}
+\NormalTok{acc<-}\KeywordTok{list}\NormalTok{() }\CommentTok{#Creating an empty list to store accuracy}
+
+\CommentTok{#Testing the kknn method for different k values (1-50)}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{)\{}
+\NormalTok{  model_kknn<-}\KeywordTok{kknn}\NormalTok{(R1}\OperatorTok{~}\NormalTok{., }\DataTypeTok{train =}\NormalTok{ train_data, }\DataTypeTok{test =}\NormalTok{ val_data,}
+                   \DataTypeTok{k=}\NormalTok{i, }\DataTypeTok{scale =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{  pred<-}\KeywordTok{fitted}\NormalTok{(model_kknn)}
+\NormalTok{  pre<-}\KeywordTok{ifelse}\NormalTok{(pred}\OperatorTok{>}\FloatTok{0.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{  acc[[i]]=}\KeywordTok{sum}\NormalTok{(pre}\OperatorTok{==}\NormalTok{val_data[,}\DecValTok{11}\NormalTok{])}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(val_data)}
+\NormalTok{\}}
+
+\CommentTok{#Choosing the best value of k from the validation accuracy. To this we put both}
+\CommentTok{#accuracy and k in a data frame and plot it}
+
+\NormalTok{score<-}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k=}\KeywordTok{list}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{), }\DataTypeTok{Accuracy=}\KeywordTok{unlist}\NormalTok{(acc))}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ score, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{X1}\FloatTok{.50}\NormalTok{, }\DataTypeTok{y=}\NormalTok{Accuracy))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\FloatTok{0.5}\NormalTok{,}\DataTypeTok{color=}\StringTok{'red'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Finding the best model from the previous data frame}
+\NormalTok{score_sort<-score[}\KeywordTok{order}\NormalTok{(}\OperatorTok{-}\NormalTok{score}\OperatorTok{$}\NormalTok{Accuracy),]}
+
+\KeywordTok{message}\NormalTok{(}\StringTok{'Best k: '}\NormalTok{,score_sort[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Best k: 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{message}\NormalTok{(}\StringTok{'Accuracy of the model using the best k: '}\NormalTok{, score_sort[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Accuracy of the model using the best k: 0.887755102040816
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Now testing this model  on the test data}
+\NormalTok{model_test<-}\KeywordTok{kknn}\NormalTok{(R1}\OperatorTok{~}\NormalTok{.,}\DataTypeTok{train =}\NormalTok{ train_data, }\DataTypeTok{test =}\NormalTok{ test_data, }\DataTypeTok{k=}\NormalTok{score_sort[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{],}
+                 \DataTypeTok{scale =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test_predict<-}\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{fitted}\NormalTok{(model_test)}\OperatorTok{>}\FloatTok{0.5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{test_accuracy<-}\KeywordTok{sum}\NormalTok{(test_predict}\OperatorTok{==}\NormalTok{test_data[,}\DecValTok{11}\NormalTok{])}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(test_data)}
+
+\KeywordTok{message}\NormalTok{(}\StringTok{'Accuracy of the model on the test using the best k:'}\NormalTok{, test_accuracy)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Accuracy of the model on the test using the best k:0.836734693877551
+\end{verbatim}
+
+\hypertarget{question-4.1}{%
+\subsection{Question 4.1}\label{question-4.1}}
+
+Describe a situation or problem from your job, everyday life, current
+events, etc., for which a clustering model would be appropriate. List
+some (up to 5) predictors that you might use.
+
+Answer:
+
+In my job as an engineer, I investigate well performance and decide
+which well may need any intervention or predict which well might go
+down. We interpret the signature of the well to predict what could be
+the potential problem. We use the following predictors for this
+investigation.
+
+\begin{itemize}
+\tightlist
+\item
+  Tubing/Casing size
+\item
+  Reservoir Pressure
+\item
+  Temperature
+\item
+  Casing/Tubing pressure
+\item
+  Flow rate
+\end{itemize}
+
+I can see myself developing a clustering model where I can feed these
+parameters and see what kind of problem cluster the well end up getting
+into and thus proactively take necessary actions.
+
+\hypertarget{question-4.2}{%
+\subsection{Question 4.2}\label{question-4.2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Getting the data}
+\NormalTok{iris_data<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{'iris.txt'}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#Visualizing the data using various combination to get some intuition of the}
+\CommentTok{#data distribution}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_data, }\KeywordTok{aes}\NormalTok{(Sepal.Length, }
+\NormalTok{                             Sepal.Width, }
+                             \DataTypeTok{color=}\NormalTok{iris_data}\OperatorTok{$}\NormalTok{Species))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\DecValTok{1}\NormalTok{) }\CommentTok{#The plot shows two clusters with sertosa having its own}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+                      \CommentTok{#clear cluster. }
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_data, }\KeywordTok{aes}\NormalTok{(Petal.Length, }
+\NormalTok{                             Petal.Width, }
+                             \DataTypeTok{color=}\NormalTok{iris_data}\OperatorTok{$}\NormalTok{Species))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\DecValTok{1}\NormalTok{) }\CommentTok{#Shows three good clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_data, }\KeywordTok{aes}\NormalTok{(Petal.Length, }
+\NormalTok{                             Sepal.Length, }
+                             \DataTypeTok{color=}\NormalTok{iris_data}\OperatorTok{$}\NormalTok{Species))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\DecValTok{1}\NormalTok{) }\CommentTok{#Shows three ok clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_data, }\KeywordTok{aes}\NormalTok{(Petal.Width, }
+\NormalTok{                             Sepal.Width, }
+                             \DataTypeTok{color=}\NormalTok{iris_data}\OperatorTok{$}\NormalTok{Species))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\DecValTok{1}\NormalTok{) }\CommentTok{#Shows three good clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-7-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_data, }\KeywordTok{aes}\NormalTok{(Petal.Length, }
+\NormalTok{                             Sepal.Width, }
+                             \DataTypeTok{color=}\NormalTok{iris_data}\OperatorTok{$}\NormalTok{Species))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\DecValTok{1}\NormalTok{) }\CommentTok{#Shows three clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-7-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_data, }\KeywordTok{aes}\NormalTok{(Petal.Width, }
+\NormalTok{                             Sepal.Length, }
+                             \DataTypeTok{color=}\NormalTok{iris_data}\OperatorTok{$}\NormalTok{Species))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha=}\DecValTok{1}\NormalTok{) }\CommentTok{#Shows three clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Assignment-2_files/figure-latex/unnamed-chunk-7-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#This above method of trying to plot all comibnation of predictor variables will}
+\CommentTok{#not be effective when their are a lot of predictors. The conclusion from this }
+\CommentTok{#is that we need somewhere between 2 to 3 clusters, but we will test for }
+\CommentTok{#upto 5 clusters}
+
+\CommentTok{#######Now evaluating kmeans with different data combinations#################}
+
+\CommentTok{#Scaling the data}
+\NormalTok{scale_iris<-}\KeywordTok{scale}\NormalTok{(iris_data[}\OperatorTok{-}\DecValTok{5}\NormalTok{])}
+
+\CommentTok{#Tesing the algorithm with all the predictors for clusters between (2-5)}
+\NormalTok{table1<-}\KeywordTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  model_all<-}\KeywordTok{kmeans}\NormalTok{(}\DataTypeTok{x=}\NormalTok{scale_iris[,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{], }\DataTypeTok{centers =}\NormalTok{ i, }\DataTypeTok{nstart =} \DecValTok{30}\NormalTok{)}
+\NormalTok{  table1[[i]]=}\KeywordTok{table}\NormalTok{(iris_data}\OperatorTok{$}\NormalTok{Species,model_all}\OperatorTok{$}\NormalTok{cluster)}
+  \KeywordTok{print}\NormalTok{(table1[[i]])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             
+##               1  2
+##   setosa      0 50
+##   versicolor 50  0
+##   virginica  50  0
+##             
+##               1  2  3
+##   setosa      0 50  0
+##   versicolor 39  0 11
+##   virginica  14  0 36
+##             
+##               1  2  3  4
+##   setosa     25 25  0  0
+##   versicolor  0  0 39 11
+##   virginica   0  0 14 36
+##             
+##               1  2  3  4  5
+##   setosa     22  0  0  0 28
+##   versicolor  0  2 21 27  0
+##   virginica   0 27  2 21  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Tesing the algorithm with Petal Length & Petal Width for clusters between (2-5)}
+\NormalTok{table2<-}\KeywordTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  model_all<-}\KeywordTok{kmeans}\NormalTok{(}\DataTypeTok{x=}\NormalTok{scale_iris[,}\DecValTok{3}\OperatorTok{:}\DecValTok{4}\NormalTok{], }\DataTypeTok{centers =}\NormalTok{ i, }\DataTypeTok{nstart =} \DecValTok{30}\NormalTok{)}
+\NormalTok{  table2[[i]]=}\KeywordTok{table}\NormalTok{(iris_data}\OperatorTok{$}\NormalTok{Species,model_all}\OperatorTok{$}\NormalTok{cluster)}
+  \KeywordTok{print}\NormalTok{(table2[[i]])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             
+##               1  2
+##   setosa      0 50
+##   versicolor 50  0
+##   virginica  50  0
+##             
+##               1  2  3
+##   setosa      0 50  0
+##   versicolor 48  0  2
+##   virginica   4  0 46
+##             
+##               1  2  3  4
+##   setosa      0  0  0 50
+##   versicolor 42  8  0  0
+##   virginica   0 23 27  0
+##             
+##               1  2  3  4  5
+##   setosa      0 50  0  0  0
+##   versicolor 24  0  0 23  3
+##   virginica   4  0 26  0 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Tesing the algorithm with Petal Width & Sepal Width for clusters between (2-5)}
+\NormalTok{table3<-}\KeywordTok{list}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  model_all<-}\KeywordTok{kmeans}\NormalTok{(}\DataTypeTok{x=}\NormalTok{scale_iris[,}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{)], }\DataTypeTok{centers =}\NormalTok{ i, }\DataTypeTok{nstart =} \DecValTok{30}\NormalTok{)}
+\NormalTok{  table3[[i]]=}\KeywordTok{table}\NormalTok{(iris_data}\OperatorTok{$}\NormalTok{Species,model_all}\OperatorTok{$}\NormalTok{cluster)}
+  \KeywordTok{print}\NormalTok{(table3[[i]])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             
+##               1  2
+##   setosa      1 49
+##   versicolor 50  0
+##   virginica  50  0
+##             
+##               1  2  3
+##   setosa     49  0  1
+##   versicolor  0 15 35
+##   virginica   0 39 11
+##             
+##               1  2  3  4
+##   setosa     16  1 33  0
+##   versicolor  0 35  0 15
+##   virginica   0 11  0 39
+##             
+##               1  2  3  4  5
+##   setosa      0 16  1 33  0
+##   versicolor 29  0 18  0  3
+##   virginica  19  0  6  0 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#By comparing all the tables its clear that 3 clusters can define the data well, }
+\CommentTok{#with Petal length and Petal width providing the best classification with }
+\CommentTok{#Sertosa in cluster 3 completely without any misclassification. For Versicolor}
+\CommentTok{#most of them are in cluster 2 with only 2 in cluster 1. Similarly,for virginica}
+\CommentTok{#most of them are in cluster 1 with only 4 in cluster 2. The conclusions are }
+\CommentTok{#made using table 2 using k=3 clusters.}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}
