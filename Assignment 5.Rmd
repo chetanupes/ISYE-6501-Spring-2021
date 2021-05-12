@@ -1,0 +1,252 @@
+---
+title: "Assignment 5"
+output: pdf_document
+---
+
+## Question 8.1
+
+Describe a situation or problem from your job, everyday life, current events, 
+etc., for which a linear regression model would be appropriate. List some (up 
+to 5) predictors that you might use.
+
+## Answer 8.1
+
+I am presently working on a problem where I am trying to predict future 
+production of an oil well using a bunch of predictors. The response variable 
+here is the oil rate and some of the predictors are as follows:
+
+1. Casing Pressure
+2. Reservoir Pressure
+3. Reservoir Temperature
+4. Welbore radius
+5. Liquid Ratios
+
+## Question 8.2
+
+Using crime data from http://www.statsci.org/data/general/uscrime.txt  
+(file uscrime.txt, description at http://www.statsci.org/data/general/
+uscrime.html ), use regression (a useful R function is lm or glm) to predict 
+the observed crime rate in a city with the following data:
+
+M = 14.0
+So = 0
+Ed = 10.0
+Po1 = 12.0
+Po2 = 15.5
+LF = 0.640
+M.F = 94.0
+Pop = 150
+NW = 1.1
+U1 = 0.120
+U2 = 3.6
+Wealth = 3200
+Ineq = 20.1
+Prob = 0.04
+Time = 39.0
+
+Show your model (factors used and their coefficients), the software output, 
+and the quality of fit. 
+
+## Answer 8.2
+
+I have tried different models to analyze the data. Since the dataset is 
+small I did not split the data into testing and training data. So, I trained the
+full dataset. 
+
+Also, I investigated the presence of outliers in the dataset and assumed 
+that the data is correct and thus did not further investigate in removing them.
+
+The models are also evaluated to make sure that the assumptions of the 
+regression model holds true such as:
+1. Linearity
+2. Normality and homoscedasticity
+3. No endogeneity with the predictors (meaning that the predictors have no 
+   correlation with error)
+4. No multi-collinearity between predictors
+
+# Model 1
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(outliers)
+library(caret)
+library(reshape2)
+library(MASS)
+```
+
+```{r message=TRUE, warning=FALSE}
+
+#Getting the training and test data
+crime_data<-read.table('uscrime.txt', sep = "", header = TRUE )
+test<-read.table('test.txt', sep="", header = TRUE)
+
+max(crime_data$Crime)
+#Exploratory data analysis and pre-processing
+
+#We can explore the data for outlier using the strategies we learned earlier. 
+
+#Scaling the data to fit the box plot in the plot
+crime_scale<-scale(crime_data[,1:15])
+out<-melt(crime_scale)
+
+#Box plot to view the outliers
+ggplot(out,aes(x=Var2, y=value))+geom_boxplot()
+
+#Some of the predictors seems to have outliers. We cannot just simply remove 
+#them. Thus, for this exercise we will keep the original dataset without 
+#further investigating them
+
+#Linear regression model  
+model1<-lm(Crime~.,data = crime_data)          
+
+summary(model1) # Model summary
+pred1<-predict(model1, test) #Prediction on test data
+
+#Plotting model results
+plot(model1)
+
+#Linear regression model 1a using cross validation 
+set.seed(123)
+train.control <- trainControl(method = "cv", number = 10)
+model1a<-train(Crime~.,data = crime_data, method='lm',  #Linear Model with CV
+             trControl=train.control)          
+
+summary(model1a) # Model summary
+pred1a<-predict(model1a, test) #Prediction on test data
+
+#Plotting residual vs fitted data to make sure there is no trend in the errors
+res<-resid(model1a)
+plot(fitted(model1a), res)
+abline(0,0) #Adding a horizontal line
+
+#The residual plot shows no pattern confirming that errors have no explanatory 
+#power for the above model and this is what we want that the explanatory power
+#of the model resides with the predictors
+
+```
+
+# Conclusions: Model 1
+
+Now evaluating the results above. Let's first look into the model summary. 
+The overall efficiency of the model is judged using the adjusted R^2 value which 
+is around 70%, which is good. But the model prediction on the test data gives 
+crime rate as 155 which almost half of the min value of crime rate in the 
+dataset. To investigated this let's look at the model summary plots:
+
+1. Residual vs Fitted: The linearity assumption dose not look good
+2. Q-Q Plot: The normality assumption here again is not great specially for 
+   earlier values.
+3. Scale-Location:To show homoscedasticity the trend line should be straight,but
+   we can see it's somewhat straight
+   
+To investigate the next steps the model predictors are assessed for their 
+significance using the p-values. A new model can then be build using only 
+the predictors with strong significance. We will use p-value of 0.1 and any 
+predictor with higher than this will be removed from the new model.
+
+For regression the null hypothesis is that the coefficient and the intercept are
+not significant. Now for a predictor to be significant we need to reject the null 
+hypothesis by using the p-value.We will use p-value of 0.1 and any predictor 
+with higher than this will be removed from the new model. So using this criteria 
+the following predictors(M,Ed,U2, Ineq, Prob, Po1) are significant using the 
+p-value of Model 1
+
+# Model 2 
+
+Models with less predictors
+
+```{r message=TRUE, warning=FALSE}
+
+#Linear regression model 2 
+model2<-lm(Crime~M+Ed+Po1+U2+Ineq+Prob,data = crime_data)          
+
+summary(model2) # Model summary
+pred2<-predict(model2, test) #Prediction on test data
+
+#Plotting model results
+plot(model2)
+
+#Linear regression model 2 using cross validation 
+set.seed(123)
+train2.control <- trainControl(method = "cv", number = 10)
+model2a<-train(Crime~M+Ed+Po1+U2+Ineq+Prob,
+               data = crime_data, method='lm',  #Linear Model2 with CV
+               trControl=train.control)          
+
+summary(model2a) # Model summary
+pred2a<-predict(model2a, test) #Prediction on test data
+
+#Plotting residual vs fitted data to make sure there is no trend in the errors
+res2<-resid(model2a)
+plot(fitted(model2a), res2)
+abline(0,0) #Adding a horizontal line
+
+#The residual plot shows no pattern confirming that errors have no explanatory 
+#power for the above model and this is what we want that the explanatory power
+#of the model resides with the predictors
+```
+# Conclusion: Model 2
+
+Now evaluating Model 2 shows that all the predictors are significant in terms 
+of the p-value. Also, the model fit shows adjusted R^2 to be 73% better than the 
+previous model. 
+
+Investigating the model summary plots:
+
+1. Residual vs Fitted: The linearity assumption looks better than model 1
+2. Q-Q Plot: The normality assumption here again is not great specially for 
+   earlier and later data.
+3. Scale-Location:To show homoscedasticity the trend line should be straight,but
+   we can see it's somewhat straight
+
+Model 2 prediction on test data gives crime rate as 1304 which looks more 
+realistic than predicted by model 1
+
+Since for the above models the assumptions were not great we can try 
+transformation technique
+
+# Model 3
+Model transformation using log transformation on response data
+
+
+```{r message=TRUE, warning=FALSE}
+
+#Linear regression model 3a on full dataset using model1
+model1_trans<-lm(log(Crime)~.,data = crime_data)
+
+summary(model1_trans)
+pre_trans<-predict(model1_trans, test)
+
+#Converting prediction to the same scale
+final<-exp(pre_trans)
+
+#Plotting model results
+plot(model1_trans)
+
+#Linear regression model 3b on smaller dataset
+modela_trans<-lm(log(Crime)~M+Ed+Po1+U2+Ineq+Prob,data = crime_data) 
+
+summary(modela_trans) # Model summary
+pred_trans1<-predict(modela_trans, test) #Prediction on test data
+
+#Converting prediction to the same scale
+final1<-exp(pred_trans1)
+
+#Plotting model results
+plot(modela_trans)
+
+```
+
+# Conclusion: Model 3
+
+Now evaluating Model 3
+
+Investigating the model summary plots:
+
+1. Residual vs Fitted: The linearity assumption looks best
+2. Q-Q Plot: The normality assumption here again is best.
+3. Scale-Location: homoscedasticity trend line is better,
+
+Model 3a prediction on test data gives crime rate as 364 better than model 1. 
+Model 3b prediction on test data gives crime rate as 1260 but its difficult to
+draw a comparison between model 2.

@@ -1,0 +1,2 @@
+M 	So 	Ed 	Po1 	Po2 	LF 	M.F 	Pop 	NW 	U1 	U2 	Wealth 	Ineq 	Prob 	Time 
+14	0	10	12	15.5	0.64	94	150	1.1	0.12	3.6	3200	20.1	0.04	39
