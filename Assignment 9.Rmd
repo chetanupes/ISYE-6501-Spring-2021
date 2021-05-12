@@ -1,0 +1,139 @@
+---
+title: "Assignment 9"
+output: pdf_document
+---
+## Question 12.1
+
+Describe a situation or problem from your job, everyday life, current events, 
+etc., for which a design of experiments approach would be appropriate.
+
+## Answer 12.1
+
+I am presently working towards loosing weight. This is a very good situtation 
+where I can use DOE to see what factors (execercise and diet with their 
+variations) will help or have the largest impact on my targets. It can also help 
+in identifying important interactions between the factors. 
+
+
+## Question 12.2
+
+To determine the value of 10 different yes/no features to the market value of a 
+house (large yard, solar roof, etc.), a real estate agent plans to survey 50 
+potential buyers, showing a fictitious house with different combinations of 
+features.  To reduce the survey size, the agent wants to show just 16 fictitious 
+houses. Use R’s FrF2 function (in the FrF2 package) to find a fractional 
+factorial design for this experiment: what set of features should each of the 16 
+fictitious houses have?  Note: the output of FrF2 is “1” (include) or  “-1” 
+(don’t include) for each feature.
+
+## Answer 12.2
+
+2. Experimental Design
+With the current selection we have 10 factors and 16 runs.Factorials designs are 
+useful as screening experiments because they require relatively few runs to 
+estimate main and interaction effects.
+
+Randomization
+While we have no control over how the data will be collected, by selecting a 
+random sample from the data, we are incorporating randomization into the model.
+
+Blocking
+Blocking is not used in this design. This is a screening experiment and we are 
+interested in the effects of all the factors.
+
+```{r message=FALSE, warning=FALSE}
+library(FrF2)
+```
+
+```{r message=TRUE, warning=FALSE}
+set.seed(42)
+des<-FrF2(nfactors = 10,nruns = 16, 
+          factor.names = c('Yard', 'Parking','Rooms','Basement', 'Price',
+                           'Location','School Nearby', 'Supermarket Nearby',
+                           'Luxary Home','Train Station Nearby'))
+```
+
+## Question 13.1
+
+For each of the following distributions, give an example of data that you would 
+expect to follow this distribution (besides the examples already discussed 
+in class).
+
+a.	Binomial   
+b.	Geometric   
+c.	Poisson   
+d.	Exponential  
+e.	Weibull
+
+
+## Answer 13.1
+
+A probability distribution is a statistical function that describes all the 
+possible values and likelihoods that a random variable can take within a 
+given range. This range will be bounded between the minimum and maximum possible 
+values, but precisely where the possible value is likely to be plotted on 
+the probability distribution depends on a number of factors. These factors 
+include the distribution's mean (average), standard deviation, skewness, and 
+kurtosis.
+
+#	Binomial
+
+The binomial distribution describes the behavior of a count variable X if 
+the following conditions apply:
+
+1: The number of observations n is fixed.
+2: Each observation is independent.
+3: Each observation represents one of two outcomes ("success" or "failure").
+4: The probability of "success" p is the same for each outcome.
+
+If these conditions are met, then X has a binomial distribution with 
+parameters n and p
+
+Example: Applying for a n Data Scientist jobs with observation being selected or 
+rejected. Thus, the number of times a person gets selected might follow 
+a binomial distribution
+
+#	Geometric   
+
+If I randomly ask people which university they went to, until I meet someone who 
+went to Georgia Tech. Thus, in this example p is the probaility of finding 
+someone who went to Georgia Tech after asking X number of people. In this case, 
+we can say that X follows a geometric distribution.
+
+# Poisson   
+The number of car accidents per hour in a day might follow a Poisson Distribution
+
+# Exponential  
+In the above example the time between two accidents might follow the exponential 
+distribution. 
+
+# Weibull
+Modeling the time to failure of an engine by a car manufacturer might follow
+Weibull distribution.
+
+## Question 13.2
+
+In this problem you, can simulate a simplified airport security system at a busy 
+airport. Passengers arrive according to a Poisson distribution with λ1 = 5 per 
+minute (i.e., mean interarrival rate mu1 = 0.2 minutes) to the ID/boarding-pass 
+check queue, where there are several servers who each have exponential service 
+time with mean rate mu2 = 0.75 minutes. [Hint: model them as one block that has 
+more than one resource.]  After that, the passengers are assigned to the shortest 
+of the several personal-check queues, where they go through the personal scanner
+(time is uniformly distributed between 0.5 minutes and 1 minute). 
+
+Use the Arena software (PC users) or Python with SimPy (PC or Mac users) to build 
+a simulation of the system, and then vary the number of ID/boarding-pass checkers
+and personal-check queues to determine how many are needed to keep average wait 
+times below 15 minutes.  [If you’re using SimPy, or if you have access to a non-
+student version of Arena, you can use λ1 = 50 to simulate a busier airport.]
+
+## Answer 13.2
+
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

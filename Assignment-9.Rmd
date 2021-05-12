@@ -1,0 +1,191 @@
+---
+title: "Assignment 9"
+output: pdf_document
+---
+## Question 12.1
+
+Describe a situation or problem from your job, everyday life, current events, 
+etc., for which a design of experiments approach would be appropriate.
+
+## Answer 12.1
+
+I am presently working towards loosing weight. This is a very good situation 
+where I can use DOE to see what factors (exercise and diet with their 
+variations) will help or have the largest impact on my targets. It can also help 
+in identifying important interactions between the factors. 
+
+
+## Question 12.2
+
+To determine the value of 10 different yes/no features to the market value of a 
+house (large yard, solar roof, etc.), a real estate agent plans to survey 50 
+potential buyers, showing a fictitious house with different combinations of 
+features.  To reduce the survey size, the agent wants to show just 16 fictitious 
+houses. Use R’s FrF2 function (in the FrF2 package) to find a fractional 
+factorial design for this experiment: what set of features should each of the 16 
+fictitious houses have?  Note: the output of FrF2 is “1” (include) or  “-1” 
+(don’t include) for each feature.
+
+## Answer 12.2
+
+# Experimental Design
+
+With the current selection we have 10 factors and 16 runs.Factorial designs are 
+useful as screening experiments because they require relatively few runs to 
+estimate main and interaction effects.
+
+# Randomization
+
+While we have no control over how the data will be collected, by selecting a 
+random sample from the data, we are incorporating randomization into the model.
+
+# Blocking
+
+Blocking is not used in this design. This is a screening experiment and we are 
+interested in the effects of all the factors.
+
+```{r message=FALSE, warning=FALSE}
+library(FrF2)
+```
+
+```{r message=TRUE, warning=FALSE}
+set.seed(42)
+des<-FrF2(nfactors = 10,nruns = 16, 
+          factor.names = c('Yard', 'Parking','Rooms','Basement', 'Price',
+                           'Location','School Nearby', 'Supermarket Nearby',
+                           'Luxary Home','Train Station Nearby'))
+```
+
+## Question 13.1
+
+For each of the following distributions, give an example of data that you would 
+expect to follow this distribution (besides the examples already discussed 
+in class).
+
+a.	Binomial   
+b.	Geometric   
+c.	Poisson   
+d.	Exponential  
+e.	Weibull
+
+
+## Answer 13.1
+
+A probability distribution is a statistical function that describes all the 
+possible values and likelihoods that a random variable can take within a 
+given range. This range will be bounded between the minimum and maximum possible 
+values, but precisely where the possible value is likely to be plotted on 
+the probability distribution depends on a number of factors. These factors 
+include the distribution's mean (average), standard deviation, skewness, and 
+kurtosis.
+
+1. Binomial
+Applying for a n Data Scientist jobs with observation being selected or 
+rejected. Thus, the number of times a person gets selected might follow 
+a binomial distribution
+
+2. Geometric   
+If I randomly ask people which university they went to, until I meet someone who 
+went to Georgia Tech. Thus, in this example p is the probability of finding 
+someone who went to Georgia Tech after asking X number of people. In this case, 
+we can say that X follows a geometric distribution.
+
+3. Poisson   
+The number of car accidents per hour in a day might follow a Poisson Distribution
+
+4. Exponential  
+In the above example the time between two accidents might follow the exponential 
+distribution. 
+
+5. Weibull
+Modeling the time to failure of an engine by a car manufacturer might follow
+Weibull distribution.
+
+```{r message=FALSE, warning=FALSE}
+```
+
+## Question 13.2
+
+In this problem you, can simulate a simplified airport security system at a busy 
+airport. Passengers arrive according to a Poisson distribution with Lambda 1=5 
+per minute (i.e., mean interarrival rate mu1 = 0.2 minutes) to the ID/boarding
+check queue, where there are several servers who each have exponential service 
+time with mean rate mu2 = 0.75 minutes. [Hint: model them as one block that has 
+more than one resource.]  After that, the passengers are assigned to the shortest 
+of the several personal-check queues, where they go through the personal scanner
+(time is uniformly distributed between 0.5 minutes and 1 minute). 
+
+Use the Arena software (PC users) or Python with SimPy (PC or Mac users) to build 
+a simulation of the system, and then vary the number of ID/boarding-pass checkers
+and personal-check queues to determine how many are needed to keep average wait 
+times below 15 minutes.  [If you’re using SimPy, or if you have access to a non-
+student version of Arena, you can use Lambda 1 = 50 to simulate a busier airport
+
+## Answer 13.2
+
+I started this assignment using the student version of Arena but quickly hit the 
+road block with the limitation of the student version. I then started this 
+exercise in the Virtual Lab of Gatech. Below is the approach I followed with 
+various results summarized.MOst of this approach was discussed in the office hour
+
+# Basic Model: 5 Scanners and 1 ID Check resource 
+
+1. Created the two processes required ID check and Scanners. ID Check is an 
+Exponential distribution and Security lines have a uniform distribution as per 
+the assignment.
+
+2. Scanner sorting decision box is used to manage the queue.The expression used 
+to manage the the traffic is as follows:
+
+  a) Scanner 1: Minimum of all the scanner queues 
+  
+  b) Scanner 2 to 6: Queue greater than previous Scanner and less than the rest 
+     of the scanners.
+
+The model is tested with 5 replications/iterations for a 24 hour cycle for this 
+simulation.The results are depicted in hours.
+
+![Base Model (Image from newer student version of Arena).](C:/Users/cheta/OneDrive/Desktop/Setup.png)
+
+## Model 1: 5 Scanner and ID Check (1 resource)
+
+![Table 1.](C:/Users/cheta/OneDrive/Desktop/5 model.png)
+
+This model was able to bring down the waiting time to much lower than 15 mins 
+but there are resources which are not used as can be seen in the table above 
+with Scanner 4 and 5 zero average waiting time.
+
+## Model 2: 3 Scanner and ID Check (1 resource)
+
+![Table 2.](C:/Users/cheta/OneDrive/Desktop/4 model.png)
+
+Based on the previous model we saw that we were not using all the resources and 
+thus for this model we used only 3 scanners. The results above show that the 
+average wait time now is much larger using 3 scanners and 1 resource at ID 
+check. We can will further improvise to find the best model.
+
+## Model 3: 4 Scanner and ID Check (1 resource)
+
+![Table 3.](C:/Users/cheta/OneDrive/Desktop/3 model.png)
+
+With this model we can see that we were able to bring down the average waiting 
+time from the previous model but not to the extent we want to. The first three 
+model helped to see how many scanners we can work with. In the coming model I 
+worked to optimize the resources in the ID check in the subsequent models.
+
+
+## Model 4: 4 Scanner and ID Check (6 resource)
+
+![Table 4.](C:/Users/cheta/OneDrive/Desktop/2 model.png)
+
+With 6 resources at the ID check the model performed well but again Scanner 
+2,3,4 are unused.
+
+## Model 5: 4 Scanner and ID Check (4 resource)
+
+![Table 5.](C:/Users/cheta/OneDrive/Desktop/1 model.png)
+
+The final model gave the best results in terms of using all the resources and 
+also bringing the average below 15 minutes.There are many ways to optimize this 
+simulation and adding more constraints also takes time run those simulations.
+
